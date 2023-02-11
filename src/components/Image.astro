@@ -1,57 +1,14 @@
 ---
 import { Image } from "@astrojs/image/components";
-let open = false;
+
 const { image } = Astro.props;
 ---
 
 <Image
-  id="imageThumbnail"
   format="webp"
   src={image}
   alt="Dani art"
-  width={200}
-  height={200}
-  fit="cover"
+  width={800}
+  aspectRatio="1:1"
+  fit={"contain"}
 />
-<dialog open={open} class="fixed top-4">
-  <Image
-    id="imageModal"
-    format="webp"
-    src={image}
-    alt="Dani art"
-    width={600}
-    height={600}
-    fit={"inside"}
-  />
-</dialog>
-
-<script>
-  const images = document.querySelectorAll("#imageThumbnail");
-  const dialogs = document.querySelectorAll("dialog");
-
-  images.forEach((image, i) => {
-    image.addEventListener("click", () => {
-      dialogs[i].showModal();
-    });
-  });
-
-  dialogs.forEach((dialog) => {
-    dialog.addEventListener("click", function (event) {
-      const rect = dialog.getBoundingClientRect();
-      const isInDialog =
-        rect.top <= event.clientY &&
-        event.clientY <= rect.top + rect.height &&
-        rect.left <= event.clientX &&
-        event.clientX <= rect.left + rect.width;
-      if (!isInDialog) {
-        dialog.close();
-      }
-    });
-  });
-</script>
-
-<style>
-  dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-</style>

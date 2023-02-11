@@ -1,29 +1,158 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Image  from '../components/Image.astro';
-import laura from '../assets/laura_by_manzhana_d4cavc7-fullview.jpg';
-import fig1 from '../assets/d37axn8-863dfde2-05e8-4a9e-b823-47fe98a4fabc.jpg';
-import fig2 from '../assets/moleskin_danger_01_by_manzhana_d37axdt-fullview.jpg';
+import Layout from "../layouts/Layout.astro";
+import Image from "../components/Image.astro";
+import Thumbnail from "../components/Thumbnail.astro";
 
 const gallery = [
-	{
-		image: laura,
-	},
-	{
-		image: fig1,
-	},
-	{
-		image: fig2,
-	},
-]
-
+  {
+    image: 1,
+  },
+  {
+    image: 2,
+  },
+  {
+    image: 3,
+  },
+  {
+    image: 4,
+  },
+  {
+    image: 5,
+  },
+  {
+    image: 6,
+  },
+  {
+    image: 7,
+  },
+  {
+    image: 8,
+  },
+  {
+    image: 9,
+  },
+  {
+    image: 10,
+  },
+  {
+    image: 11,
+  },
+  {
+    image: 12,
+  },
+  {
+    image: 13,
+  },
+  {
+    image: 14,
+  },
+  {
+    image: 15,
+  },
+  {
+    image: 16,
+  },
+  {
+    image: 17,
+  },
+  {
+    image: 18,
+  },
+  {
+    image: 19,
+  },
+  {
+    image: 20,
+  },
+  {
+    image: 21,
+  },
+  {
+    image: 22,
+  },
+];
 ---
 
 <Layout title="Dani art 🎨">
-	<div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-5 p-4 justify-items-center">
-		{gallery.map((item) => (
-			<Image image={item.image} />
-		))}
-	</div>
+  <header class="swiper">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+
+      {
+        gallery.map((item) => (
+          <div class="swiper-slide">
+            <div class="w-full flex justify-center items-center">
+              <div>
+                <Image image={import(`../assets/${item.image}.jpg`)} />
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <!-- If we need pagination -->
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- If we need scrollbar -->
+    <div class="swiper-scrollbar"></div>
+  </header>
+  <main class="overflow-x-auto h-fit">
+    <div
+      class="grid grid-cols-[repeat(auto-fill,_minmax(50px,_1fr))] gap-2 mt-5 p-4 justify-items-center"
+    >
+      {
+        gallery.map((item, index) => (
+          <Thumbnail
+            index={index}
+            image={import(`../assets/${item.image}.jpg`)}
+          />
+        ))
+      }
+    </div>
+  </main>
 </Layout>
 
+<script>
+  import Swiper, { Navigation, Pagination } from "swiper";
+  import "swiper/css";
+  import "swiper/css/navigation";
+  import "swiper/css/pagination";
+  const swiper = new Swiper(".swiper", {
+    direction: "horizontal",
+    loop: true,
+    modules: [Navigation, Pagination],
+    pagination: {
+      el: ".swiper-pagination",
+    },
+
+    // Navigation arrows
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    // And if we need scrollbar
+    scrollbar: {
+      el: ".swiper-scrollbar",
+    },
+  });
+  addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight") {
+      swiper.slideNext();
+    }
+    if (e.key === "ArrowLeft") {
+      swiper.slidePrev();
+    }
+  });
+
+  const thumbnails = document.querySelectorAll(".thumbnail");
+  thumbnails.forEach((thumb) => {
+    thumb.addEventListener("click", function () {
+      const [, index] = this.id.split("-");
+      swiper.slideTo(index);
+    });
+  });
+</script>

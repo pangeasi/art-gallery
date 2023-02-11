@@ -1,0 +1,16 @@
+---
+import { Image } from "@astrojs/image/components";
+
+const { image, index } = Astro.props;
+---
+
+<Image
+  id={`thumb-${index}`}
+  class="thumbnail"
+  format="webp"
+  src={image}
+  alt="Dani art"
+  width={50}
+  aspectRatio="1:1"
+  fit={"cover"}
+/>
